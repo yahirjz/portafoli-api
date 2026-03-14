@@ -4,6 +4,7 @@ from pydantic import BaseModel
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig
 from dotenv import load_dotenv
 import os
+from fastapi.middleware.cors import CORSMiddleware
 
 load_dotenv() # <-- Cargamos las variables 
 
@@ -17,6 +18,14 @@ conf = ConnectionConfig(
     MAIL_SERVER="smtp.gmail.com", # <-- Servidor de GMAIl
     MAIL_STARTTLS=True, # <-- activamos el cifrado del email
     MAIL_SSL_TLS=False
+)
+
+# <-- Manejo de CORS 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 class Contacto(BaseModel):
